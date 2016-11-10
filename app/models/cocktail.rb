@@ -1,4 +1,4 @@
 class Cocktail < ApplicationRecord
-  validates :name, uniqueness: true
-  validates
+  has_many :doses
+
 end
