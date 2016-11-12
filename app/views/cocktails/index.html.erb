@@ -1,5 +1,8 @@
 
 <h1>The Cocktails</h1>
+
+    <hr>
+
     <% @cocktails.each do |cocktail| %>
     <h2><%= link_to cocktail.name, cocktail %></h2>
     <%= link_to '<i class="fa fa-pencil" aria-hidden="true"></i>'.html_safe, edit_cocktail_path(cocktail.id) %>
