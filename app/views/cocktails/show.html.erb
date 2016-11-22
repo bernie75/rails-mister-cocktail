@@ -1,30 +1,43 @@
-<%content_for :title do %>
-<%= @cocktail.name %>
-<% end%>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
 
-<h1><i class="fa fa-glass" aria-hidden="true"></i> <%= @cocktail.name %></h1>
-<div class="row">
-  <div class="col-sm-8">
-    <ul>
-      <% @cocktail.doses.each do |dose| %>
-        <p><i class="fa fa-hand-o-right" aria-hidden="true"></i> <%= dose.ingredient.name %> <%= dose.description%>
-             <%= link_to '<i class="fa fa-pencil" aria-hidden="true"></i>'.html_safe, edit_cocktail_dose_path(@cocktail, dose ) %>
-             <%= link_to '<i class="fa fa-trash" aria-hidden="true"></i>'.html_safe, cocktail_dose_path(@cocktail, dose),
-              method: :delete,
-              data: { confirm: "Are you sure?" } %></p>
-      <%end%>
-    </ul>
+      <h1><%= @cocktail.name %></h1>
 
-    <p><%= link_to '<i class="fa fa-arrow-left" aria-hidden="true"></i>'.html_safe, cocktails_path%><p>
-</div>
-<div class="col-sm-4">
-<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-  Add Ingredient
-</button>
-<div class="collapse" id="collapseExample">
-  <div class="well">
-    <%= render 'doses/form'%>
+      <ul class="list-unstyled">
+        <% @cocktail.doses.each do |dose| %>
+          <li><%= link_to dose.ingredient.name, ingredient_path(dose.ingredient) %> : <%= dose.description %>
+              <%= link_to "<i class='fa fa-close'></i>".html_safe, dose_path(dose), method: :delete, data: { confirm: "Are you sure?" } %>
+          </li>
+        <% end %>
+      </ul>
+
+  <%= simple_form_for([@cocktail, @dose]) do |f| %>
+      <br>
+      <% if @dose.errors.any? %>
+        <ul>
+          <% @dose.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      <% end %>
+        <%= f.input :description %>
+        <%= f.input :ingredient_id, collection: Ingredient.all, prompt:"choisir ingredient!" %>
+        <%= f.submit class: "btn btn-primary" %>
+      <% end %>
+      <%= link_to 'Back', @cocktails %>
+    </div>
   </div>
+  <div class="form">
+    <p>📸 upload la photo </p>
+    <%= render 'form_picture' %>
 </div>
-
+  <div class="picture-list">
+    <p>This is how it should look like</p>
+    <% if @cocktail.photo? %>
+      <% @cocktail.photo.each do |photo| %>
+        <%= cl_image_tag photo.path, width: 200, height: 300, crop: :fill %>
+      <% end %>
+    <% end %>
+  </div>
 </div>

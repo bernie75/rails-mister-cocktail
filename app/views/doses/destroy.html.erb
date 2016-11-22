@@ -1,2 +1,4 @@
-<h1>Doses#destroy</h1>
-<p>Find me in app/views/doses/destroy.html.erb</p>
+<div class="container">
+  <h1>Your dose has been successfuly deleted 🎉</h1>
+  <p><%= link_to "Back to " + @cocktail.name, cocktail_path(@cocktail)  %></p>
+</div>

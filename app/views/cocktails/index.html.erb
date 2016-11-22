@@ -1,13 +1,42 @@
 
-<h1>The Cocktails</h1>
+<h1 class="text-center">Les Cocktails</h1>
 
-    <hr>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Trend Chart (Area + Line)</title>
+    <link rel="stylesheet" href="app.css">
+  </head>
 
+  <body>
+  </body>
+
+  <script src="http://d3js.org/d3.v3.js"></script>
+  <script src="app.js"></script>
+</html>
+
+<div class="text-center padded">
+  <%= link_to "Create a cocktail", new_cocktail_path, class: "btn btn-primary" %>
+</div>
+
+<div class="container">
+  <div class="row">
     <% @cocktails.each do |cocktail| %>
-    <h2><%= link_to cocktail.name, cocktail %></h2>
-    <%= link_to '<i class="fa fa-pencil" aria-hidden="true"></i>'.html_safe, edit_cocktail_path(cocktail.id) %>
-    <%= link_to '<i class="fa fa-trash" aria-hidden="true"></i>'.html_safe, cocktail_path(cocktail.id),
-      method: :delete,
-      data: { confirm: "Are you sure?" } %>
-    <hr>
-<% end %>
+      <div class="col-xs-12 col-sm-4">
+        <div class="card text-center">
+
+          <% if cocktail.photo %>
+            <div class="card" style="background-image: url('<%= image_path cocktail.photo%>')">
+            </div>
+          <% else %>
+            <div class="card" style="background-image: url('http://www.seriouseats.com/images/2014/11/20141104-cocktail-party-old-fashioneds-holiday-vicky-wasik-3.jpg')">
+            </div>
+          <% end %>
+          <div class="card-body">
+            <%= link_to cocktail.name, cocktail_path(cocktail) %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
